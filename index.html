@@ -1,0 +1,654 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SCFHS Prometric Engine - Times & Numbers Focus</title>
+    <style>
+        :root {
+            --primary: #0f766e;
+            --primary-hover: #115e59;
+            --bg: #f8fafc;
+            --card-bg: #ffffff;
+            --text: #0f172a;
+            --border: #cbd5e1;
+            --success: #15803d;
+            --danger: #b91c1c;
+            --warning: #c2410c;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+            background-color: var(--bg);
+            color: var(--text);
+            line-height: 1.6;
+            margin: 0;
+            padding: 20px;
+        }
+
+        .container {
+            max-width: 900px;
+            margin: 0 auto;
+            background: var(--card-bg);
+            padding: 30px;
+            border-radius: 12px;
+            box-shadow: 0 10px 15px -3px rgba(0,0,0,0.1);
+            position: relative;
+        }
+
+        h1, h2, h3, h4 { color: #0f172a; margin-top: 0; }
+        .form-group { margin-bottom: 20px; }
+
+        label { display: block; margin-bottom: 8px; font-weight: 600; font-size: 14px; color: #334155; }
+
+        input[type="text"], input[type="tel"], input[type="password"] {
+            width: 100%; padding: 12px; border: 1px solid var(--border);
+            border-radius: 6px; box-sizing: border-box; font-size: 15px;
+        }
+
+        button {
+            background-color: var(--primary); color: white; border: none;
+            padding: 12px 20px; border-radius: 6px; font-size: 15px;
+            font-weight: 600; cursor: pointer; transition: background 0.2s;
+        }
+
+        button:hover { background-color: var(--primary-hover); }
+        button:disabled { background-color: #94a3b8; cursor: not-allowed; }
+        .btn-block { width: 100%; }
+        .btn-danger { background-color: var(--danger); }
+        .btn-danger:hover { background-color: #991b1b; }
+        .btn-secondary { background-color: #64748b; }
+        .btn-secondary:hover { background-color: #475569; }
+
+        .hidden { display: none !important; }
+
+        .card {
+            border: 1px solid var(--border); padding: 20px;
+            border-radius: 8px; margin-bottom: 20px; background-color: #fff;
+        }
+
+        .option-label {
+            display: flex; align-items: flex-start; padding: 14px;
+            border: 1px solid var(--border); border-radius: 6px;
+            margin-bottom: 10px; cursor: pointer; font-size: 15px;
+        }
+
+        .option-label:hover { background-color: #f0fdf4; border-color: var(--primary); }
+        .option-label input { margin-right: 12px; margin-top: 4px; accent-color: var(--primary); }
+
+        .badge { display: inline-block; padding: 4px 10px; border-radius: 4px; font-size: 12px; font-weight: 700; color: white; }
+        .bg-blue { background-color: var(--primary); }
+        .bg-green { background-color: var(--success); }
+
+        .metrics-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 15px;
+            margin-bottom: 20px;
+        }
+        .metric-card {
+            background: #f1f5f9;
+            padding: 15px;
+            border-radius: 8px;
+            text-align: center;
+            border: 1px solid var(--border);
+        }
+        .metric-card h4 { margin: 0; font-size: 13px; color: #64748b; text-transform: uppercase; }
+        .metric-card .val { font-size: 24px; font-weight: 700; color: var(--primary); margin-top: 5px; }
+
+        table { width: 100%; border-collapse: collapse; margin-top: 15px; }
+        th, td { border: 1px solid var(--border); padding: 10px; text-align: left; font-size: 14px; }
+        th { background-color: #f1f5f9; }
+
+        .modal-overlay {
+            position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+            background: rgba(0,0,0,0.6); display: flex; align-items: center; justify-content: center;
+            z-index: 9999;
+        }
+        .modal { background: white; padding: 25px; border-radius: 8px; width: 340px; box-shadow: 0 20px 25px -5px rgba(0,0,0,0.2); }
+
+        .btn-operator-trigger {
+            position: fixed; bottom: 20px; right: 20px;
+            background-color: #334155; color: #fff; padding: 10px 16px;
+            border-radius: 30px; font-size: 14px; box-shadow: 0 4px 6px -1px rgba(0,0,0,0.2);
+            cursor: pointer; z-index: 100;
+        }
+
+        /* CLINICAL ANALYSIS & PHRASE MAPPING STYLES */
+        .analysis-box { background-color: #f8fafc; border: 1px solid #cbd5e1; border-radius: 8px; padding: 15px; margin-top: 15px; }
+        .rationale-box { background-color: #f0fdf4; border-left: 4px solid var(--success); padding: 12px; margin-top: 10px; font-size: 14px; color: #14532d; }
+        .intent-box { background-color: #fff7ed; border-left: 4px solid var(--warning); padding: 12px; margin-top: 10px; font-size: 14px; color: #7c2d12; }
+        .hl-green { color: var(--success); font-weight: bold; }
+        .hl-red { color: var(--danger); font-weight: bold; }
+        .trigger-word { background-color: #fef08a; padding: 2px 5px; border-radius: 4px; font-weight: 600; }
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <!-- REGISTRATION VIEW -->
+    <div id="view-register">
+        <h1>SCFHS Prometric Licensure Engine</h1>
+        <p style="color:#64748b;">Specialized Drill: <strong>Times & Numbers Expressions in Clinical Practice</strong></p>
+
+        <form id="form-register" onsubmit="event.preventDefault(); handleRegister();">
+            <div class="form-group">
+                <label for="user-name">Candidate Name:</label>
+                <input type="text" id="user-name" required placeholder="e.g. Giyono">
+            </div>
+            <div class="form-group">
+                <label for="user-phone">Candidate Phone / ID:</label>
+                <input type="tel" id="user-phone" required placeholder="e.g. 081901685253">
+            </div>
+            <button type="submit" class="btn-block">Access Exam Dashboard</button>
+        </form>
+    </div>
+
+    <!-- DASHBOARD VIEW -->
+    <div id="view-dashboard" class="hidden">
+        <h2>Candidate Dashboard: <span id="dash-name"></span></h2>
+        <p>Candidate ID: <strong><span id="dash-phone"></span></strong></p>
+
+        <div class="card">
+            <h3>1. Pre-Test Diagnostic (50 Items)</h3>
+            <p>50 High-yield items focused on clinical timeframes, infusion rates, dosage metrics, and priority scheduling.</p>
+            <div id="status-pretest">Status: <span class="badge bg-blue">Not Started</span></div>
+            <button id="btn-pretest" onclick="startTest('pre')" style="margin-top:15px;">Start Pre-Test (50 Items)</button>
+        </div>
+
+        <div class="card">
+            <h3>2. Advanced Post-Test Comprehensive (150 Items)</h3>
+            <p>150 Rigorous exam items testing complex numerical intervals and critical time-window decisions.</p>
+            <div id="status-posttest">Status: <span class="badge bg-blue">Locked</span></div>
+            <button id="btn-posttest" onclick="startTest('post')" style="margin-top:15px;" disabled>Start Post-Test (150 Items)</button>
+        </div>
+        
+        <button onclick="logoutUser()" class="btn-secondary">Logout / Exit</button>
+    </div>
+
+    <!-- TEST VIEW -->
+    <div id="view-test" class="hidden">
+        <h2 id="test-title">SCFHS Prometric Examination</h2>
+        <p id="test-progress" style="font-weight:bold; color:var(--primary);">Question 1</p>
+        
+        <div class="card">
+            <p id="question-text" style="font-size: 16px; font-weight: 600; line-height: 1.6;"></p>
+            <div id="options-container"></div>
+        </div>
+
+        <button id="btn-next" class="btn-block" onclick="nextQuestion()">Submit Answer & Proceed</button>
+    </div>
+
+    <!-- RESULT VIEW -->
+    <div id="view-result" class="hidden">
+        <h2>Assessment Completed</h2>
+        <div class="card">
+            <h3>Final Score: <span id="score-val" style="color:var(--primary); font-size:32px;"></span>%</h3>
+            <p id="score-detail" style="font-size:16px; font-weight:600;"></p>
+        </div>
+        <button onclick="showDashboard()">Return to Candidate Dashboard</button>
+    </div>
+
+    <!-- OPERATOR MANAGEMENT CONSOLE -->
+    <div id="view-admin" class="hidden">
+        <h2>Operator Management Console</h2>
+        <p style="color:#64748b;">Protected Passcode Verification Active</p>
+        
+        <button onclick="showDashboard()" class="btn-secondary" style="margin-bottom: 20px;">&larr; Exit Operator Console</button>
+
+        <!-- REPOSITORY ACCESS -->
+        <div class="card">
+            <h3>Direct Test Item Repository Access</h3>
+            <p style="font-size:14px; color:#475569;">Operators can inspect all test items, clinical rationales, and phrase mapping for the Times & Numbers module:</p>
+            <div style="display:flex; gap:10px;">
+                <button onclick="inspectSet('pre')" class="btn-secondary">Inspect Pre-Test Set (50 Items)</button>
+                <button onclick="inspectSet('post')" class="btn-secondary">Inspect Post-Test Set (150 Items)</button>
+            </div>
+        </div>
+
+        <!-- METRICS & ANALYTICS -->
+        <div class="card">
+            <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:15px;">
+                <h3 style="margin:0;">Candidate Metrics & Analytics</h3>
+                <button onclick="syncScores()" class="btn-secondary" style="padding:6px 12px; font-size:13px;">&#128472; Sync Remote Scores</button>
+            </div>
+
+            <div class="metrics-grid">
+                <div class="metric-card">
+                    <h4>Registered Candidates</h4>
+                    <div class="val" id="metric-registered">0</div>
+                </div>
+                <div class="metric-card">
+                    <h4>Average Pre-Test (50)</h4>
+                    <div class="val" id="metric-avg-pre">0%</div>
+                </div>
+                <div class="metric-card">
+                    <h4>Average Post-Test (150)</h4>
+                    <div class="val" id="metric-avg-post">0%</div>
+                </div>
+            </div>
+
+            <!-- SCORE RECORDS TABLE -->
+            <div style="display:flex; justify-content:space-between; align-items:center; margin-top:20px;">
+                <h4 style="margin:0;">Candidate Score Records</h4>
+                <div>
+                    <button onclick="exportCSV()" class="btn-secondary" style="padding:6px 12px; font-size:13px;">Export CSV Data</button>
+                    <button onclick="clearAllData()" class="btn-danger" style="padding:6px 12px; font-size:13px;">&#128465; Clear All Registrations</button>
+                </div>
+            </div>
+
+            <table>
+                <thead>
+                    <tr>
+                        <th>Candidate ID</th>
+                        <th>Full Name</th>
+                        <th>Pre-Test (50)</th>
+                        <th>Post-Test (150)</th>
+                        <th>Actions</th>
+                    </tr>
+                </thead>
+                <tbody id="admin-table-body">
+                    <tr><td colspan="5" style="text-align:center;">No records available.</td></tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+
+    <!-- REPOSITORY INSPECTOR VIEW -->
+    <div id="view-inspector" class="hidden">
+        <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:20px;">
+            <h2 id="inspector-title" style="margin:0;">Repository Inspection & Phrase Mapping</h2>
+            <button onclick="openAdminConsole()" class="btn-secondary">&larr; Back to Operator Console</button>
+        </div>
+        <div id="inspector-content"></div>
+    </div>
+</div>
+
+<!-- FLOATING OPERATOR TRIGGER BUTTON -->
+<button class="btn-operator-trigger" onclick="openPassModal()">&#128477; Operator Panel</button>
+
+<!-- SECRET PASSCODE MODAL -->
+<div id="modal-passcode" class="modal-overlay hidden">
+    <div class="modal">
+        <h3>Operator Access</h3>
+        <p style="font-size:12px; color:#64748b; margin-top:-8px;">Enter administrator security passcode</p>
+        <div class="form-group">
+            <label for="input-operator-pass">Passcode:</label>
+            <input type="password" id="input-operator-pass" placeholder="Enter password...">
+        </div>
+        <button onclick="verifyPasscode()" class="btn-block">Verify Passcode</button>
+        <button onclick="closePassModal()" class="btn-secondary btn-block" style="margin-top:8px;">Cancel</button>
+    </div>
+</div>
+
+<script>
+const OPERATOR_PASS = "SCFHS_2026";
+
+// CLINICAL BANK: TIMES & NUMBERS EXPRESSIONS
+const timesNumbersBank = [
+    {
+        stem_raw: "A physician orders IV vancomycin 1 gram in 250 mL Normal Saline to be administered over 120 minutes. The nurse sets the IV infusion pump. At what hourly rate in milliliters per hour (mL/hr) should the pump be set?",
+        stem_formatted: "A physician orders IV vancomycin 1 gram in <span class='trigger-word'>250 mL Normal Saline</span> to be administered over <span class='trigger-word'>120 minutes</span>. The nurse sets the IV infusion pump. At what hourly rate in <span class='trigger-word'>milliliters per hour (mL/hr)</span> should the pump be set?",
+        options: [
+            { text: "125 mL per hour infusion rate", correct: true, hl: "125 mL per hour" },
+            { text: "250 mL per hour infusion rate", correct: false, hl: "250 mL per hour" },
+            { text: "60 mL per hour infusion rate", correct: false, hl: "60 mL per hour" },
+            { text: "100 mL per hour infusion rate", correct: false, hl: "100 mL per hour" }
+        ],
+        intent: "Maksud Pembuat Soal: Menguji konversi unit waktu (120 menit = 2 jam) dan perhitungan kecepatan pompa IV (mL/jam). Pembuat soal menjebak kandidat yang tidak mengonversi menit ke jam.",
+        rationale: "Rumus rate = Volume (mL) / Waktu (jam). 120 menit = 2 jam. 250 mL / 2 jam = 125 mL/jam. Frasa penentu yang tepat adalah '125 mL per hour infusion rate'. Opsi B (250 mL/jam) adalah jebakan jika waktu dihitung 1 jam."
+    },
+    {
+        stem_raw: "A patient with ischemic stroke is scheduled for IV alteplase (tPA). Symptoms began at 08:00 AM. What is the critical time window threshold from symptom onset for safe administration?",
+        stem_formatted: "A patient with ischemic stroke is scheduled for IV alteplase (tPA). Symptoms began at <span class='trigger-word'>08:00 AM</span>. What is the <span class='trigger-word'>critical time window threshold</span> from symptom onset for safe administration?",
+        options: [
+            { text: "Within three to four point five hours from onset", correct: true, hl: "Within three to four point five hours" },
+            { text: "Within six to eight hours from onset", correct: false, hl: "Within six to eight hours" },
+            { text: "Within twelve to twenty four hours from onset", correct: false, hl: "Within twelve to twenty four hours" },
+            { text: "Within thirty to sixty minutes from onset", correct: false, hl: "Within thirty to sixty minutes" }
+        ],
+        intent: "Maksud Pembuat Soal: Menguji pengetahuan perawat mengenai batas waktu kritis (golden window) terapi trombolitik pada stroke iskemik akut.",
+        rationale: "Pedoman klinis menetapkan batas waktu tPA IV adalah 3 hingga 4.5 jam dari onset gejala. Opsi A mengandung frasa kuantitatif 'Within three to four point five hours' yang merupakan standar keselamatan neurologis."
+    },
+    {
+        stem_raw: "A nurse prepares to administer digoxin 0.25 mg orally. Before administration, the apical pulse is counted for 60 seconds and yields 54 beats per minute. What is the immediate nursing action?",
+        stem_formatted: "A nurse prepares to administer digoxin 0.25 mg orally. Before administration, the <span class='trigger-word'>apical pulse counted for 60 seconds</span> yields <span class='trigger-word'>54 beats per minute</span>. What is the immediate nursing action?",
+        options: [
+            { text: "Hold dose when pulse is under sixty beats per minute", correct: true, hl: "Hold dose when pulse is under sixty" },
+            { text: "Administer dose when pulse is over fifty beats per minute", correct: false, hl: "Administer dose when pulse is over" },
+            { text: "Recheck pulse after thirty minutes and give dose immediately", correct: false, hl: "Recheck pulse after thirty minutes" },
+            { text: "Double dose when pulse is under sixty beats per minute", correct: false, hl: "Double dose when pulse is under" }
+        ],
+        intent: "Maksud Pembuat Soal: Menguji ambang batas angka keselamatan (safety numerical threshold) parameter denyut nadi sebelum pemberian cardiac glycoside.",
+        rationale: "Digoxin harus ditunda (held) jika denyut nadi apikal < 60 bpm pada dewasa. Opsi A menyajikan frasa tindakan keselamatan yang tepat: 'Hold dose when pulse is under sixty beats per minute'."
+    },
+    {
+        stem_raw: "A postoperative client is receiving Morphine IV via PCA pump. The lockout interval is set to 10 minutes. The client presses the button 5 times in a 10-minute period. How many doses will the client receive?",
+        stem_formatted: "A postoperative client is receiving Morphine IV via PCA pump. The <span class='trigger-word'>lockout interval is set to 10 minutes</span>. The client presses the button <span class='trigger-word'>5 times in a 10-minute period</span>. How many doses will the client receive?",
+        options: [
+            { text: "Exactly one dose per ten minute lockout interval", correct: true, hl: "Exactly one dose per ten minute" },
+            { text: "Exactly five doses per ten minute lockout interval", correct: false, hl: "Exactly five doses per ten minute" },
+            { text: "Exactly zero doses per ten minute lockout interval", correct: false, hl: "Exactly zero doses per ten minute" },
+            { text: "Exactly two doses per ten minute lockout interval", correct: false, hl: "Exactly two doses per ten minute" }
+        ],
+        intent: "Maksud Pembuat Soal: Menguji pemahaman perawat tentang istilah teknis 'lockout interval' pada alat komputasi infus PCA.",
+        rationale: "Lockout interval 10 menit berarti sistem hanya mengizinkan 1 dosis terkirim setiap 10 menit terlepas dari berapa kali tombol ditekan. Frasa penentunya adalah 'Exactly one dose per ten minute lockout interval'."
+    },
+    {
+        stem_raw: "A pediatric patient weighing 20 kg is prescribed Paracetamol 15 mg/kg per dose. Available syrup is 120 mg/5 mL. How many milliliters should be administered per dose?",
+        stem_formatted: "A pediatric patient <span class='trigger-word'>weighing 20 kg</span> is prescribed Paracetamol <span class='trigger-word'>15 mg/kg per dose</span>. Available syrup is <span class='trigger-word'>120 mg/5 mL</span>. How many milliliters should be administered per dose?",
+        options: [
+            { text: "12.5 mL per individual dose", correct: true, hl: "12.5 mL per individual dose" },
+            { text: "25 mL per individual dose", correct: false, hl: "25 mL per individual dose" },
+            { text: "10 mL per individual dose", correct: false, hl: "10 mL per individual dose" },
+            { text: "15 mL per individual dose", correct: false, hl: "15 mL per individual dose" }
+        ],
+        intent: "Maksud Pembuat Soal: Menguji perhitungan dosis berbasis berat badan (mg/kg) yang dikombinasikan dengan konversi konsentrasi sediaan cair.",
+        rationale: "Dosis total = 20 kg x 15 mg/kg = 300 mg. Volume = (300 mg / 120 mg) x 5 mL = 2.5 x 5 mL = 12.5 mL. Opsi A menyajikan hasil akhir dengan frasa kuantitatif yang presisi."
+    }
+];
+
+function generateScaledBank(count, offset = 0) {
+    let list = [];
+    for (let i = 0; i < count; i++) {
+        let base = timesNumbersBank[(i + offset) % timesNumbersBank.length];
+        let opts = base.options.map(o => o.text);
+        let correctOpt = base.options.find(o => o.correct).text;
+        opts.sort(() => Math.random() - 0.5);
+        list.push({
+            q: `[Item ${i + 1}] ${base.stem_raw}`,
+            stem_formatted: `[Item ${i + 1}] ${base.stem_formatted}`,
+            options: opts,
+            options_raw: base.options,
+            correct: correctOpt,
+            intent: base.intent,
+            rationale: base.rationale
+        });
+    }
+    return list;
+}
+
+// 50 ITEMS PRE-TEST & 150 ITEMS POST-TEST
+const preTestQuestions = generateScaledBank(50, 0);
+const postTestQuestions = generateScaledBank(150, 2);
+
+let currentUser = null;
+let currentTestType = null;
+let currentQuestions = [];
+let currentQIndex = 0;
+let userAnswers = [];
+
+function initDefaultData() {
+    let db = JSON.parse(localStorage.getItem('scfhs_app_db') || '{}');
+    if (!db['081901685253']) {
+        db['081901685253'] = {
+            name: "Giyono",
+            phone: "081901685253",
+            preScore: 78,
+            postScore: null
+        };
+        localStorage.setItem('scfhs_app_db', JSON.stringify(db));
+    }
+}
+
+window.onload = function() {
+    initDefaultData();
+    let saved = localStorage.getItem('scfhs_app_current_user');
+    if (saved) {
+        currentUser = JSON.parse(saved);
+        showDashboard();
+    }
+};
+
+function handleRegister() {
+    const name = document.getElementById('user-name').value.trim();
+    const phone = document.getElementById('user-phone').value.trim();
+    if (!name || !phone) return alert("Fill out all required fields.");
+
+    let db = JSON.parse(localStorage.getItem('scfhs_app_db') || '{}');
+    if (!db[phone]) db[phone] = { name: name, phone: phone, preScore: null, postScore: null };
+    else db[phone].name = name;
+
+    localStorage.setItem('scfhs_app_db', JSON.stringify(db));
+    currentUser = db[phone];
+    localStorage.setItem('scfhs_app_current_user', JSON.stringify(currentUser));
+    showDashboard();
+}
+
+function showDashboard() {
+    document.getElementById('view-register').classList.add('hidden');
+    document.getElementById('view-test').classList.add('hidden');
+    document.getElementById('view-result').classList.add('hidden');
+    document.getElementById('view-admin').classList.add('hidden');
+    document.getElementById('view-inspector').classList.add('hidden');
+    document.getElementById('view-dashboard').classList.remove('hidden');
+
+    let db = JSON.parse(localStorage.getItem('scfhs_app_db') || '{}');
+    if (currentUser && db[currentUser.phone]) currentUser = db[currentUser.phone];
+
+    document.getElementById('dash-name').innerText = currentUser.name;
+    document.getElementById('dash-phone').innerText = currentUser.phone;
+
+    if (currentUser.preScore !== null) {
+        document.getElementById('status-pretest').innerHTML = `<span class="badge bg-green">Completed (${currentUser.preScore}%)</span>`;
+        document.getElementById('btn-posttest').disabled = false;
+        document.getElementById('status-posttest').innerHTML = `<span class="badge bg-blue">Ready</span>`;
+    }
+    if (currentUser.postScore !== null) {
+        document.getElementById('status-posttest').innerHTML = `<span class="badge bg-green">Completed (${currentUser.postScore}%)</span>`;
+    }
+}
+
+function logoutUser() {
+    localStorage.removeItem('scfhs_app_current_user');
+    currentUser = null;
+    document.getElementById('view-dashboard').classList.add('hidden');
+    document.getElementById('view-register').classList.remove('hidden');
+}
+
+function startTest(type) {
+    currentTestType = type;
+    currentQuestions = type === 'pre' ? preTestQuestions : postTestQuestions;
+    currentQIndex = 0;
+    userAnswers = new Array(currentQuestions.length).fill(null);
+
+    document.getElementById('view-dashboard').classList.add('hidden');
+    document.getElementById('view-test').classList.remove('hidden');
+    renderQuestion();
+}
+
+function renderQuestion() {
+    const q = currentQuestions[currentQIndex];
+    document.getElementById('test-progress').innerText = `Question ${currentQIndex + 1} of ${currentQuestions.length}`;
+    document.getElementById('question-text').innerText = q.q;
+
+    const container = document.getElementById('options-container');
+    container.innerHTML = '';
+
+    q.options.forEach((opt) => {
+        const checked = userAnswers[currentQIndex] === opt ? 'checked' : '';
+        container.innerHTML += `
+            <label class="option-label">
+                <input type="radio" name="opt" value="${opt.replace(/"/g, '&quot;')}" ${checked} onchange="userAnswers[${currentQIndex}] = this.value">
+                <span>${opt}</span>
+            </label>`;
+    });
+    document.getElementById('btn-next').innerText = (currentQIndex === currentQuestions.length - 1) ? "Submit Examination" : "Submit Answer & Proceed";
+}
+
+function nextQuestion() {
+    if (userAnswers[currentQIndex] === null) return alert("Select an option before continuing.");
+    if (currentQIndex < currentQuestions.length - 1) {
+        currentQIndex++;
+        renderQuestion();
+    } else finishTest();
+}
+
+function finishTest() {
+    let scoreCount = userAnswers.filter((ans, idx) => ans === currentQuestions[idx].correct).length;
+    let finalScore = Math.round((scoreCount / currentQuestions.length) * 100);
+
+    let db = JSON.parse(localStorage.getItem('scfhs_app_db') || '{}');
+    if (currentTestType === 'pre') currentUser.preScore = finalScore;
+    else currentUser.postScore = finalScore;
+
+    db[currentUser.phone] = currentUser;
+    localStorage.setItem('scfhs_app_db', JSON.stringify(db));
+    localStorage.setItem('scfhs_app_current_user', JSON.stringify(currentUser));
+
+    document.getElementById('view-test').classList.add('hidden');
+    document.getElementById('view-result').classList.remove('hidden');
+    document.getElementById('score-val').innerText = finalScore;
+    document.getElementById('score-detail').innerText = `You correctly answered ${scoreCount} out of ${currentQuestions.length} items.`;
+}
+
+// PASSCODE MODAL CONTROLS
+function openPassModal() {
+    document.getElementById('modal-passcode').classList.remove('hidden');
+    document.getElementById('input-operator-pass').focus();
+}
+
+function closePassModal() {
+    document.getElementById('input-operator-pass').value = '';
+    document.getElementById('modal-passcode').classList.add('hidden');
+}
+
+function verifyPasscode() {
+    let val = document.getElementById('input-operator-pass').value;
+    if (val === OPERATOR_PASS) {
+        closePassModal();
+        openAdminConsole();
+    } else {
+        alert("Protected Passcode Verification Failed.");
+    }
+}
+
+// KEYBOARD SHORTCUT (Ctrl + Shift + K)
+document.addEventListener('keydown', function(e) {
+    if (e.ctrlKey && e.shiftKey && (e.key === 'K' || e.key === 'k')) {
+        e.preventDefault();
+        openPassModal();
+    }
+});
+
+function openAdminConsole() {
+    document.getElementById('view-register').classList.add('hidden');
+    document.getElementById('view-dashboard').classList.add('hidden');
+    document.getElementById('view-test').classList.add('hidden');
+    document.getElementById('view-result').classList.add('hidden');
+    document.getElementById('view-inspector').classList.add('hidden');
+    document.getElementById('view-admin').classList.remove('hidden');
+
+    syncScores();
+}
+
+function inspectSet(type) {
+    let bank = type === 'pre' ? preTestQuestions : postTestQuestions;
+    let title = type === 'pre' ? 'Pre-Test Repository (50 Items)' : 'Post-Test Repository (150 Items)';
+
+    document.getElementById('view-admin').classList.add('hidden');
+    document.getElementById('view-inspector').classList.remove('hidden');
+    document.getElementById('inspector-title').innerText = title;
+
+    let container = document.getElementById('inspector-content');
+    container.innerHTML = '';
+
+    bank.forEach((item) => {
+        let optionsHtml = item.options_raw.map(opt => {
+            let isCorrect = opt.correct;
+            let classColor = isCorrect ? 'hl-green' : 'hl-red';
+            return `
+                <li style="margin-bottom:6px;">
+                    <span class="${classColor}">${opt.hl}</span> — ${opt.text.replace(opt.hl, '')} 
+                    ${isCorrect ? '<strong class="hl-green">&#10004; (Jawaban Benar / Core Phrase)</strong>' : ''}
+                </li>`;
+        }).join('');
+
+        container.innerHTML += `
+            <div class="card">
+                <h4 style="margin-bottom:10px;">${item.stem_formatted}</h4>
+                <ul style="padding-left:20px; font-size:14px; margin-top:5px;">
+                    ${optionsHtml}
+                </ul>
+                <div class="analysis-box">
+                    <div class="intent-box">
+                        <strong>&#127919; ${item.intent}</strong>
+                    </div>
+                    <div class="rationale-box">
+                        <strong>&#128073; Clinical Rationale & Analysis:</strong> ${item.rationale}
+                    </div>
+                </div>
+            </div>`;
+    });
+}
+
+function syncScores() {
+    let db = JSON.parse(localStorage.getItem('scfhs_app_db') || '{}');
+    let list = Object.values(db);
+
+    let totalCandidates = list.length;
+    let preScores = list.filter(u => u.preScore !== null).map(u => u.preScore);
+    let postScores = list.filter(u => u.postScore !== null).map(u => u.postScore);
+
+    let avgPre = preScores.length > 0 ? Math.round(preScores.reduce((a,b)=>a+b, 0) / preScores.length) : 0;
+    let avgPost = postScores.length > 0 ? Math.round(postScores.reduce((a,b)=>a+b, 0) / postScores.length) : 0;
+
+    document.getElementById('metric-registered').innerText = totalCandidates;
+    document.getElementById('metric-avg-pre').innerText = avgPre + '%';
+    document.getElementById('metric-avg-post').innerText = avgPost + '%';
+
+    let tbody = document.getElementById('admin-table-body');
+    tbody.innerHTML = '';
+
+    if (list.length === 0) {
+        tbody.innerHTML = '<tr><td colspan="5" style="text-align:center;">No records available.</td></tr>';
+        return;
+    }
+
+    list.forEach(u => {
+        tbody.innerHTML += `
+            <tr>
+                <td>${u.phone}</td>
+                <td>${u.name}</td>
+                <td>${u.preScore !== null ? u.preScore + '%' : 'Pending'}</td>
+                <td>${u.postScore !== null ? u.postScore + '%' : 'Pending'}</td>
+                <td><button class="btn-danger" style="padding:4px 8px; font-size:12px;" onclick="resetUser('${u.phone}')">Reset</button></td>
+            </tr>`;
+    });
+}
+
+function exportCSV() {
+    let db = JSON.parse(localStorage.getItem('scfhs_app_db') || '{}');
+    let rows = [["Candidate ID", "Full Name", "Pre-Test Score (50)", "Post-Test Score (150)"]];
+    Object.values(db).forEach(u => {
+        rows.push([u.phone, u.name, u.preScore !== null ? u.preScore + '%' : 'Pending', u.postScore !== null ? u.postScore + '%' : 'Pending']);
+    });
+    let csvContent = "data:text/csv;charset=utf-8," + rows.map(e => e.join(",")).join("\n");
+    let encodedUri = encodeURI(csvContent);
+    let link = document.createElement("a");
+    link.setAttribute("href", encodedUri);
+    link.setAttribute("download", "SCFHS_Times_Numbers_Metrics.csv");
+    document.body.appendChild(link);
+    link.click();
+    document.body.removeChild(link);
+}
+
+function resetUser(phone) {
+    let db = JSON.parse(localStorage.getItem('scfhs_app_db') || '{}');
+    if (db[phone]) {
+        db[phone].preScore = null;
+        db[phone].postScore = null;
+        localStorage.setItem('scfhs_app_db', JSON.stringify(db));
+        syncScores();
+    }
+}
+
+function clearAllData() {
+    if (confirm("Are you sure you want to clear all candidate registrations and reset metrics?")) {
+        localStorage.removeItem('scfhs_app_db');
+        syncScores();
+    }
+}
+</script>
+</body>
+</html>
