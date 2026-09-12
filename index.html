@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>SCFHS Prometric Engine - Times & Numbers Focus</title>
+    <title>SCFHS Prometric Engine - Professional Practice (Zero-Repeat)</title>
     <style>
         :root {
             --primary: #0f766e;
@@ -20,7 +20,7 @@
         * { box-sizing: border-box; }
 
         body {
-            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
             background-color: var(--bg);
             color: var(--text);
             line-height: 1.6;
@@ -35,7 +35,6 @@
             padding: 30px;
             border-radius: 12px;
             box-shadow: 0 10px 15px -3px rgba(0,0,0,0.1);
-            position: relative;
         }
 
         h1, h2, h3, h4 { color: #0f172a; margin-top: 0; }
@@ -58,9 +57,7 @@
         button:disabled { background-color: #94a3b8; cursor: not-allowed; }
         .btn-block { width: 100%; }
         .btn-danger { background-color: var(--danger); }
-        .btn-danger:hover { background-color: #991b1b; }
         .btn-secondary { background-color: #64748b; }
-        .btn-secondary:hover { background-color: #475569; }
 
         .hidden { display: none !important; }
 
@@ -73,7 +70,6 @@
             display: flex; align-items: flex-start; padding: 14px;
             border: 1px solid var(--border); border-radius: 6px;
             margin-bottom: 10px; cursor: pointer; font-size: 15px;
-            transition: border-color 0.2s, background-color 0.2s;
         }
 
         .option-label:hover { background-color: #f0fdf4; border-color: var(--primary); }
@@ -84,10 +80,7 @@
         .bg-green { background-color: var(--success); }
 
         .metrics-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-            gap: 15px;
-            margin-bottom: 20px;
+            display: grid; grid-template-columns: repeat(3, 1fr); gap: 15px; margin-bottom: 20px;
         }
         .metric-card {
             background: #f1f5f9; padding: 15px; border-radius: 8px; text-align: center; border: 1px solid var(--border);
@@ -101,16 +94,14 @@
 
         .modal-overlay {
             position: fixed; top: 0; left: 0; width: 100%; height: 100%;
-            background: rgba(0,0,0,0.6); display: flex; align-items: center; justify-content: center;
-            z-index: 9999;
+            background: rgba(0,0,0,0.6); display: flex; align-items: center; justify-content: center; z-index: 9999;
         }
-        .modal { background: white; padding: 25px; border-radius: 8px; width: 340px; box-shadow: 0 20px 25px -5px rgba(0,0,0,0.2); }
+        .modal { background: white; padding: 25px; border-radius: 8px; width: 340px; }
 
         .btn-operator-trigger {
             position: fixed; bottom: 20px; right: 20px;
             background-color: #334155; color: #fff; padding: 10px 16px;
-            border-radius: 30px; font-size: 14px; box-shadow: 0 4px 6px -1px rgba(0,0,0,0.2);
-            cursor: pointer; z-index: 100; border: none;
+            border-radius: 30px; font-size: 14px; cursor: pointer; z-index: 100; border: none;
         }
 
         .analysis-box { background-color: #f8fafc; border: 1px solid #cbd5e1; border-radius: 8px; padding: 15px; margin-top: 15px; }
@@ -127,19 +118,19 @@
 <div class="container">
     <!-- REGISTRATION VIEW -->
     <div id="view-register">
-        <h1>SCFHS Prometric Licensure Engine</h1>
-        <p style="color:#64748b;">Specialized Drill: <strong>Times & Numbers Expressions in Clinical Practice</strong></p>
+        <h1>SCFHS Prometric Competency Engine</h1>
+        <p style="color:#64748b;">Professional Engine: <strong>50 Unique Non-Repeating Clinical Items</strong></p>
 
         <form id="form-register" onsubmit="event.preventDefault(); handleRegister();">
             <div class="form-group">
-                <label for="user-name">Candidate Name:</label>
-                <input type="text" id="user-name" required placeholder="e.g. Giyono">
+                <label for="user-name">Candidate Full Name:</label>
+                <input type="text" id="user-name" required placeholder="e.g. Ns. Ahmad Subagyo, S.Kep">
             </div>
             <div class="form-group">
-                <label for="user-phone">Candidate Phone / ID:</label>
-                <input type="tel" id="user-phone" required placeholder="e.g. 081901685253">
+                <label for="user-phone">Candidate Phone / STR ID:</label>
+                <input type="tel" id="user-phone" required placeholder="e.g. 081234567890">
             </div>
-            <button type="submit" class="btn-block">Access Exam Dashboard</button>
+            <button type="submit" class="btn-block">Access Examination Dashboard</button>
         </form>
     </div>
 
@@ -149,17 +140,17 @@
         <p>Candidate ID: <strong><span id="dash-phone"></span></strong></p>
 
         <div class="card">
-            <h3>1. Pre-Test Diagnostic (50 Items)</h3>
-            <p>50 High-yield items focused on clinical timeframes, infusion rates, dosage metrics, and priority scheduling.</p>
+            <h3>1. Diagnostic Pre-Test (25 Unique Items)</h3>
+            <p>Standardized diagnostic test evaluating core competency across fluid conversions, time expressions, quantity units, and clinical math.</p>
             <div id="status-pretest">Status: <span class="badge bg-blue">Not Started</span></div>
-            <button id="btn-pretest" onclick="startTest('pre')" style="margin-top:15px;">Start Pre-Test (50 Items)</button>
+            <button id="btn-pretest" onclick="startTest('pre')" style="margin-top:15px;">Start Diagnostic Pre-Test</button>
         </div>
 
         <div class="card">
-            <h3>2. Advanced Post-Test Comprehensive (150 Items)</h3>
-            <p>150 Rigorous exam items testing complex numerical intervals and critical time-window decisions.</p>
+            <h3>2. Comprehensive Post-Test (50 Unique Items)</h3>
+            <p>Full licensure exam simulation containing 50 unique clinical vignettes with randomized options.</p>
             <div id="status-posttest">Status: <span class="badge bg-blue">Locked</span></div>
-            <button id="btn-posttest" onclick="startTest('post')" style="margin-top:15px;" disabled>Start Post-Test (150 Items)</button>
+            <button id="btn-posttest" onclick="startTest('post')" style="margin-top:15px;" disabled>Start Comprehensive Post-Test</button>
         </div>
         
         <button onclick="logoutUser()" class="btn-secondary">Logout / Exit</button>
@@ -167,7 +158,7 @@
 
     <!-- TEST VIEW -->
     <div id="view-test" class="hidden">
-        <h2 id="test-title">SCFHS Prometric Examination</h2>
+        <h2 id="test-title">SCFHS Licensing Examination</h2>
         <p id="test-progress" style="font-weight:bold; color:var(--primary);">Question 1</p>
         
         <div class="card">
@@ -191,84 +182,77 @@
     <!-- OPERATOR MANAGEMENT CONSOLE -->
     <div id="view-admin" class="hidden">
         <h2>Operator Management Console</h2>
-        <p style="color:#64748b;">Protected Passcode Verification Active</p>
+        <p style="color:#64748b;">Senior Educator Assessment Control Panel</p>
         
         <button onclick="showDashboard()" class="btn-secondary" style="margin-bottom: 20px;">&larr; Exit Operator Console</button>
 
-        <!-- REPOSITORY ACCESS -->
         <div class="card">
-            <h3>Direct Test Item Repository Access</h3>
-            <p style="font-size:14px; color:#475569;">Operators can inspect all test items, clinical rationales, and phrase mapping for the Times & Numbers module:</p>
-            <div style="display:flex; gap:10px; flex-wrap:wrap;">
-                <button onclick="inspectSet('pre')" class="btn-secondary">Inspect Pre-Test Set (50 Items)</button>
-                <button onclick="inspectSet('post')" class="btn-secondary">Inspect Post-Test Set (150 Items)</button>
+            <h3>Test Item Repository Inspection</h3>
+            <p style="font-size:14px; color:#475569;">Inspect all unique question items, distractors, and clinical rationales:</p>
+            <div style="display:flex; gap:10px;">
+                <button onclick="inspectSet('pre')" class="btn-secondary">Inspect Pre-Test Bank (25 Unique Items)</button>
+                <button onclick="inspectSet('post')" class="btn-secondary">Inspect Post-Test Bank (50 Unique Items)</button>
             </div>
         </div>
 
-        <!-- METRICS & ANALYTICS -->
         <div class="card">
-            <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:15px; flex-wrap:wrap; gap:10px;">
-                <h3 style="margin:0;">Candidate Metrics & Analytics</h3>
-                <button onclick="syncScores()" class="btn-secondary" style="padding:6px 12px; font-size:13px;">&#128472; Sync Remote Scores</button>
+            <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:15px;">
+                <h3 style="margin:0;">Candidate Analytics</h3>
+                <button onclick="syncScores()" class="btn-secondary" style="padding:6px 12px; font-size:13px;">&#128472; Sync Analytics</button>
             </div>
 
             <div class="metrics-grid">
                 <div class="metric-card">
-                    <h4>Registered Candidates</h4>
+                    <h4>Total Registered</h4>
                     <div class="val" id="metric-registered">0</div>
                 </div>
                 <div class="metric-card">
-                    <h4>Average Pre-Test (50)</h4>
+                    <h4>Average Pre-Test</h4>
                     <div class="val" id="metric-avg-pre">0%</div>
                 </div>
                 <div class="metric-card">
-                    <h4>Average Post-Test (150)</h4>
+                    <h4>Average Post-Test</h4>
                     <div class="val" id="metric-avg-post">0%</div>
                 </div>
             </div>
 
-            <!-- SCORE RECORDS TABLE -->
-            <div style="display:flex; justify-content:space-between; align-items:center; margin-top:20px; flex-wrap:wrap; gap:10px;">
+            <div style="display:flex; justify-content:space-between; align-items:center; margin-top:20px;">
                 <h4 style="margin:0;">Candidate Score Records</h4>
                 <div>
-                    <button onclick="exportCSV()" class="btn-secondary" style="padding:6px 12px; font-size:13px;">Export CSV Data</button>
-                    <button onclick="clearAllData()" class="btn-danger" style="padding:6px 12px; font-size:13px;">&#128465; Clear All Registrations</button>
+                    <button onclick="exportCSV()" class="btn-secondary" style="padding:6px 12px; font-size:13px;">Export CSV</button>
+                    <button onclick="clearAllData()" class="btn-danger" style="padding:6px 12px; font-size:13px;">Clear Data</button>
                 </div>
             </div>
 
-            <div style="overflow-x:auto;">
-                <table>
-                    <thead>
-                        <tr>
-                            <th>Candidate ID</th>
-                            <th>Full Name</th>
-                            <th>Pre-Test (50)</th>
-                            <th>Post-Test (150)</th>
-                            <th>Actions</th>
-                        </tr>
-                    </thead>
-                    <tbody id="admin-table-body">
-                        <tr><td colspan="5" style="text-align:center;">No records available.</td></tr>
-                    </tbody>
-                </table>
-            </div>
+            <table>
+                <thead>
+                    <tr>
+                        <th>ID / Phone</th>
+                        <th>Candidate Name</th>
+                        <th>Pre-Test Score</th>
+                        <th>Post-Test Score</th>
+                        <th>Actions</th>
+                    </tr>
+                </thead>
+                <tbody id="admin-table-body">
+                    <tr><td colspan="5" style="text-align:center;">No records available.</td></tr>
+                </tbody>
+            </table>
         </div>
     </div>
 
     <!-- REPOSITORY INSPECTOR VIEW -->
     <div id="view-inspector" class="hidden">
-        <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:20px; flex-wrap:wrap; gap:10px;">
-            <h2 id="inspector-title" style="margin:0;">Repository Inspection & Phrase Mapping</h2>
-            <button onclick="openAdminConsole()" class="btn-secondary">&larr; Back to Operator Console</button>
+        <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:20px;">
+            <h2 id="inspector-title" style="margin:0;">Repository Inspection Panel</h2>
+            <button onclick="openAdminConsole()" class="btn-secondary">&larr; Back to Console</button>
         </div>
         <div id="inspector-content"></div>
     </div>
 </div>
 
-<!-- FLOATING OPERATOR TRIGGER BUTTON -->
 <button class="btn-operator-trigger" onclick="openPassModal()">&#128477; Operator Panel</button>
 
-<!-- SECRET PASSCODE MODAL -->
 <div id="modal-passcode" class="modal-overlay hidden">
     <div class="modal">
         <h3>Operator Access</h3>
@@ -285,71 +269,478 @@
 <script>
 const OPERATOR_PASS = "SCFHS_2026";
 
-// CLINICAL BANK: TIMES & NUMBERS EXPRESSIONS
-const timesNumbersBank = [
+// EXACT 50 UNIQUE CLINICAL TEST ITEMS (ZERO DUPLICATES / NO MODULO LOOP)
+const masterUniqueBank = [
+    // TIME EXPRESSIONS (Items 1-10)
     {
-        stem_raw: "A physician orders IV vancomycin 1 gram in 250 mL Normal Saline to be administered over 120 minutes. The nurse sets the IV infusion pump. At what hourly rate in milliliters per hour (mL/hr) should the pump be set?",
-        stem_formatted: "A physician orders IV vancomycin 1 gram in <span class='trigger-word'>250 mL Normal Saline</span> to be administered over <span class='trigger-word'>120 minutes</span>. The nurse sets the IV infusion pump. At what hourly rate in <span class='trigger-word'>milliliters per hour (mL/hr)</span> should the pump be set?",
-        options: [
-            { text: "125 mL per hour infusion rate", correct: true, hl: "125 mL per hour" },
-            { text: "250 mL per hour infusion rate", correct: false, hl: "250 mL per hour" },
-            { text: "60 mL per hour infusion rate", correct: false, hl: "60 mL per hour" },
-            { text: "100 mL per hour infusion rate", correct: false, hl: "100 mL per hour" }
-        ],
-        intent: "Maksud Pembuat Soal: Menguji konversi unit waktu (120 menit = 2 jam) dan perhitungan kecepatan pompa IV (mL/jam). Pembuat soal menjebak kandidat yang tidak mengonversi menit ke jam.",
-        rationale: "Rumus rate = Volume (mL) / Waktu (jam). 120 menit = 2 jam. 250 mL / 2 jam = 125 mL/jam. Frasa penentu yang tepat adalah '125 mL per hour infusion rate'. Opsi 250 mL/jam adalah jebakan jika waktu dihitung 1 jam."
+        domain: "Time Expressions",
+        stem_raw: "A British physician writes in the handoff log: 'Administer the follow-up IV antibiotic at a quarter past five in the afternoon.' How should the nurse schedule this in standard 12-hour digital format?",
+        stem_formatted: "Log instruction: <span class='trigger-word'>a quarter past five in the afternoon</span>. Record in 12-hour format:",
+        correct_answer: "5:15 PM",
+        distractors: ["5:45 PM", "4:45 PM", "5:30 PM"],
+        intent: "Menguji penerjemahan istilah waktu British 'a quarter past' ke 12-jam PM.",
+        rationale: "'A quarter past five' berarti 15 menit setelah jam 5 (5:15 PM)."
     },
     {
-        stem_raw: "A patient with ischemic stroke is scheduled for IV alteplase (tPA). Symptoms began at 08:00 AM. What is the critical time window threshold from symptom onset for safe administration?",
-        stem_formatted: "A patient with ischemic stroke is scheduled for IV alteplase (tPA). Symptoms began at <span class='trigger-word'>08:00 AM</span>. What is the <span class='trigger-word'>critical time window threshold</span> from symptom onset for safe administration?",
-        options: [
-            { text: "Within three to four point five hours from onset", correct: true, hl: "Within three to four point five hours" },
-            { text: "Within six to eight hours from onset", correct: false, hl: "Within six to eight hours" },
-            { text: "Within twelve to twenty four hours from onset", correct: false, hl: "Within twelve to twenty four hours" },
-            { text: "Within thirty to sixty minutes from onset", correct: false, hl: "Within thirty to sixty minutes" }
-        ],
-        intent: "Maksud Pembuat Soal: Menguji pengetahuan perawat mengenai batas waktu kritis (golden window) terapi trombolitik pada stroke iskemik akut.",
-        rationale: "Pedoman klinis menetapkan batas waktu tPA IV adalah 3 hingga 4.5 jam dari onset gejala. Opsi yang memuat 'Within three to four point five hours' merupakan standar keselamatan neurologis."
+        domain: "Time Expressions",
+        stem_raw: "A patient states, 'I took my last dose of pain medication at ten to eight this morning.' What time should the nurse record in the medical documentation?",
+        stem_formatted: "Patient states: <span class='trigger-word'>ten to eight this morning</span>. Record time in documentation:",
+        correct_answer: "07:50 AM",
+        distractors: ["08:10 AM", "08:50 AM", "07:10 AM"],
+        intent: "Menguji penerjemahan ekspresi waktu 'ten to eight' ke format AM.",
+        rationale: "'Ten to eight' menunjukkan 10 menit sebelum jam 8 (07:50 AM)."
     },
     {
-        stem_raw: "A nurse prepares to administer digoxin 0.25 mg orally. Before administration, the apical pulse is counted for 60 seconds and yields 54 beats per minute. What is the immediate nursing action?",
-        stem_formatted: "A nurse prepares to administer digoxin 0.25 mg orally. Before administration, the <span class='trigger-word'>apical pulse counted for 60 seconds</span> yields <span class='trigger-word'>54 beats per minute</span>. What is the immediate nursing action?",
-        options: [
-            { text: "Hold dose when pulse is under sixty beats per minute", correct: true, hl: "Hold dose when pulse is under sixty" },
-            { text: "Administer dose when pulse is over fifty beats per minute", correct: false, hl: "Administer dose when pulse is over" },
-            { text: "Recheck pulse after thirty minutes and give dose immediately", correct: false, hl: "Recheck pulse after thirty minutes" },
-            { text: "Double dose when pulse is under sixty beats per minute", correct: false, hl: "Double dose when pulse is under" }
-        ],
-        intent: "Maksud Pembuat Soal: Menguji ambang batas angka keselamatan (safety numerical threshold) parameter denyut nadi sebelum pemberian cardiac glycoside.",
-        rationale: "Digoxin harus ditunda (held) jika denyut nadi apikal < 60 bpm pada dewasa. Tindakan keselamatan yang tepat: 'Hold dose when pulse is under sixty beats per minute'."
+        domain: "Time Expressions",
+        stem_raw: "A surgical schedule indicates an operation is set for 'half past eleven at night'. How should the nurse record this in 24-hour military time?",
+        stem_formatted: "Surgical schedule: <span class='trigger-word'>half past eleven at night</span>. Convert to 24-hour military time:",
+        correct_answer: "23:30",
+        distractors: ["11:30", "23:50", "11:50"],
+        intent: "Menguji konversi waktu kolokial ke format 24 jam militer.",
+        rationale: "'Half past eleven at night' = 11:30 PM. 11:30 + 12:00 = 23:30."
     },
     {
-        stem_raw: "A postoperative client is receiving Morphine IV via PCA pump. The lockout interval is set to 10 minutes. The client presses the button 5 times in a 10-minute period. How many doses will the client receive?",
-        stem_formatted: "A postoperative client is receiving Morphine IV via PCA pump. The <span class='trigger-word'>lockout interval is set to 10 minutes</span>. The client presses the button <span class='trigger-word'>5 times in a 10-minute period</span>. How many doses will the client receive?",
-        options: [
-            { text: "Exactly one dose per ten minute lockout interval", correct: true, hl: "Exactly one dose per ten minute" },
-            { text: "Exactly five doses per ten minute lockout interval", correct: false, hl: "Exactly five doses per ten minute" },
-            { text: "Exactly zero doses per ten minute lockout interval", correct: false, hl: "Exactly zero doses per ten minute" },
-            { text: "Exactly two doses per ten minute lockout interval", correct: false, hl: "Exactly two doses per ten minute" }
-        ],
-        intent: "Maksud Pembuat Soal: Menguji pemahaman perawat tentang istilah teknis 'lockout interval' pada alat komputasi infus PCA.",
-        rationale: "Lockout interval 10 menit berarti sistem hanya mengizinkan 1 dosis terkirim setiap 10 menit terlepas dari berapa kali tombol ditekan. Frasa penentunya adalah 'Exactly one dose per ten minute lockout interval'."
+        domain: "Time Expressions",
+        stem_raw: "A handover note mentions that an NPO instruction starts at 'twenty to ten at night'. What is the corresponding 24-hour time?",
+        stem_formatted: "NPO order starts at <span class='trigger-word'>twenty to ten at night</span>. Record in 24-hour time:",
+        correct_answer: "21:40",
+        distractors: ["22:20", "21:20", "22:40"],
+        intent: "Menguji konversi 'twenty to' malam hari ke format jam 24-jam.",
+        rationale: "'Twenty to ten PM' = 09:40 PM. 09:40 + 12:00 = 21:40."
     },
     {
-        stem_raw: "A pediatric patient weighing 20 kg is prescribed Paracetamol 15 mg/kg per dose. Available syrup is 120 mg/5 mL. How many milliliters should be administered per dose?",
-        stem_formatted: "A pediatric patient <span class='trigger-word'>weighing 20 kg</span> is prescribed Paracetamol <span class='trigger-word'>15 mg/kg per dose</span>. Available syrup is <span class='trigger-word'>120 mg/5 mL</span>. How many milliliters should be administered per dose?",
-        options: [
-            { text: "12.5 mL per individual dose", correct: true, hl: "12.5 mL per individual dose" },
-            { text: "25 mL per individual dose", correct: false, hl: "25 mL per individual dose" },
-            { text: "10 mL per individual dose", correct: false, hl: "10 mL per individual dose" },
-            { text: "15 mL per individual dose", correct: false, hl: "15 mL per individual dose" }
+        domain: "Time Expressions",
+        stem_raw: "A doctor orders a stat dose to be given at 'quarter to six in the morning'. What is the exact 12-hour digital time?",
+        stem_formatted: "Stat dose ordered at <span class='trigger-word'>quarter to six in the morning</span>. Express in 12-hour format:",
+        correct_answer: "05:45 AM",
+        distractors: ["06:15 AM", "05:15 AM", "06:45 AM"],
+        intent: "Menguji istilah 'quarter to' pagi hari.",
+        rationale: "'Quarter to six' = 15 menit sebelum jam 6 pagi = 05:45 AM."
+    },
+    {
+        domain: "Time Expressions",
+        stem_raw: "The ICU protocol requires vitals to be taken at '00:15 hours'. How should this be explained to the patient in 12-hour clock terms?",
+        stem_formatted: "ICU protocol specifies <span class='trigger-word'>00:15 hours</span>. Translate to 12-hour clock:",
+        correct_answer: "12:15 AM",
+        distractors: ["12:15 PM", "01:15 AM", "11:15 PM"],
+        intent: "Menguji konversi jam 00:xx militer ke format 12-jam AM.",
+        rationale: "Jam 00:15 militer adalah 15 menit setelah tengah malam (12:15 AM)."
+    },
+    {
+        domain: "Time Expressions",
+        stem_raw: "A medication administration log states: 'Give Next Dose at 18:45'. What time should the nurse tell the patient?",
+        stem_formatted: "Log specifies dose at <span class='trigger-word'>18:45</span>. Translate to 12-hour PM time:",
+        correct_answer: "6:45 PM",
+        distractors: ["8:45 PM", "6:45 AM", "7:45 PM"],
+        intent: "Menguji konversi 24-jam militer ke 12-jam PM.",
+        rationale: "18:45 - 12:00 = 6:45 PM."
+    },
+    {
+        domain: "Time Expressions",
+        stem_raw: "An infusion started at 'twenty-five past eight in the evening'. Convert this starting time to 24-hour format.",
+        stem_formatted: "Infusion started at <span class='trigger-word'>twenty-five past eight in the evening</span>. Express in 24-hour format:",
+        correct_answer: "20:25",
+        distractors: ["08:25", "21:25", "19:25"],
+        intent: "Menguji konversi 'twenty-five past' malam ke jam militer.",
+        rationale: "8:25 PM dalam 24-jam = 8:25 + 12:00 = 20:25."
+    },
+    {
+        domain: "Time Expressions",
+        stem_raw: "A lab specimen must be collected at 'five to midnight'. What is the 24-hour digital representation?",
+        stem_formatted: "Specimen collection at <span class='trigger-word'>five to midnight</span>. Convert to 24-hour time:",
+        correct_answer: "23:55",
+        distractors: ["00:05", "11:55", "23:05"],
+        intent: "Menguji pemahaman batas pergantian hari 23:55.",
+        rationale: "5 menit sebelum midnight (24:00) = 23:55."
+    },
+    {
+        domain: "Time Expressions",
+        stem_raw: "A post-op check is due at 'half past noon'. How should this be documented in 24-hour military notation?",
+        stem_formatted: "Check scheduled at <span class='trigger-word'>half past noon</span>. Record in 24-hour notation:",
+        correct_answer: "12:30",
+        distractors: ["00:30", "13:30", "12:00"],
+        intent: "Menguji pemahaman istilah 'noon' (12:00 PM) dan 'half past'.",
+        rationale: "'Half past noon' = 12:30."
+    },
+
+    // QUANTITY UNITS (Items 11-20)
+    {
+        domain: "Quantity Units",
+        stem_raw: "The nurse inventory manager receives 'two gross' of surgical gloves. How many total pairs of gloves does this equal?",
+        stem_formatted: "Inventory manager receives <span class='trigger-word'>two gross</span> of gloves. Calculate total pairs:",
+        correct_answer: "288 pairs of gloves",
+        distractors: ["240 pairs of gloves", "144 pairs of gloves", "200 pairs of gloves"],
+        intent: "Menguji konversi satuan kuantitas 'gross'.",
+        rationale: "1 gross = 144 unit. 2 gross = 2 x 144 = 288 pasang."
+    },
+    {
+        domain: "Quantity Units",
+        stem_raw: "A disaster relief supply log lists '4 kodi' of sterile blankets received. How many individual blankets were delivered?",
+        stem_formatted: "Supply log lists <span class='trigger-word'>4 kodi</span> of blankets. Count total individual pieces:",
+        correct_answer: "80 blankets",
+        distractors: ["40 blankets", "48 blankets", "100 blankets"],
+        intent: "Menguji konversi satuan jumlah 'kodi'.",
+        rationale: "1 kodi = 20 unit. 4 kodi = 4 x 20 = 80 selimut."
+    },
+    {
+        domain: "Quantity Units",
+        stem_raw: "The clinical department orders '3.5 dozen' ampoules of Furosemide. How many total ampoules should the nurse verify upon delivery?",
+        stem_formatted: "Department orders <span class='trigger-word'>3.5 dozen</span> ampoules. Calculate total unit count:",
+        correct_answer: "42 ampoules",
+        distractors: ["35 ampoules", "36 ampoules", "48 ampoules"],
+        intent: "Menguji konversi desimal 'dozen' (lusin).",
+        rationale: "1 dozen = 12 unit. 3.5 x 12 = 42 ampul."
+    },
+    {
+        domain: "Quantity Units",
+        stem_raw: "The nursing administration orders 1.5 reams of patient documentation paper. How many sheets of paper should be received?",
+        stem_formatted: "Order includes <span class='trigger-word'>1.5 reams</span> of paper. Calculate total sheets:",
+        correct_answer: "750 sheets",
+        distractors: ["500 sheets", "600 sheets", "1000 sheets"],
+        intent: "Menguji pemahaman satuan logistik 'ream' (rim).",
+        rationale: "1 ream = 500 lembar. 1.5 x 500 = 750 lembar."
+    },
+    {
+        domain: "Quantity Units",
+        stem_raw: "A central sterile supply department distributes 5 gross of IV start kits. How many total kits were distributed?",
+        stem_formatted: "CSSD distributes <span class='trigger-word'>5 gross</span> of IV kits. Calculate total kits:",
+        correct_answer: "720 kits",
+        distractors: ["600 kits", "500 kits", "750 kits"],
+        intent: "Menguji perkalian gross skala besar.",
+        rationale: "5 gross x 144 = 720 kit."
+    },
+    {
+        domain: "Quantity Units",
+        stem_raw: "A community health clinic orders 12 kodi of adult hygiene packs. How many individual packs does the clinic receive?",
+        stem_formatted: "Clinic orders <span class='trigger-word'>12 kodi</span> of hygiene packs. Calculate total units:",
+        correct_answer: "240 packs",
+        distractors: ["120 packs", "144 packs", "200 packs"],
+        intent: "Menguji kalkulasi satuan kodi dalam pasokan klinik.",
+        rationale: "12 kodi x 20 = 240 pack."
+    },
+    {
+        domain: "Quantity Units",
+        stem_raw: "The pharmacy delivers 0.25 gross of specialized catheter tubes. How many individual tubes are provided?",
+        stem_formatted: "Pharmacy delivers <span class='trigger-word'>0.25 gross</span> of catheters. Calculate total tubes:",
+        correct_answer: "36 tubes",
+        distractors: ["25 tubes", "48 tubes", "30 tubes"],
+        intent: "Menguji kalkulasi pecahan desimal dari satuan gross.",
+        rationale: "0.25 x 144 = 36 unit."
+    },
+    {
+        domain: "Quantity Units",
+        stem_raw: "A charge nurse requests 2.25 dozen boxes of surgical masks. How many boxes of masks will be delivered?",
+        stem_formatted: "Request specifies <span class='trigger-word'>2.25 dozen</span> mask boxes. Calculate exact box count:",
+        correct_answer: "27 boxes",
+        distractors: ["24 boxes", "26 boxes", "30 boxes"],
+        intent: "Menguji desimal lusin.",
+        rationale: "2.25 x 12 = 27 box."
+    },
+    {
+        domain: "Quantity Units",
+        stem_raw: "The hospital store receives half a ream of consent forms. How many sheets of consent forms were delivered?",
+        stem_formatted: "Store receives <span class='trigger-word'>half a ream</span> of consent forms. Count total sheets:",
+        correct_answer: "250 sheets",
+        distractors: ["200 sheets", "300 sheets", "150 sheets"],
+        intent: "Menguji pecahan ream.",
+        rationale: "0.5 x 500 = 250 lembar."
+    },
+    {
+        domain: "Quantity Units",
+        stem_raw: "A nursing unit uses 3 kodi of linen bedsheets daily. How many bedsheets are used in 2 days?",
+        stem_formatted: "Unit consumes <span class='trigger-word'>3 kodi daily</span>. Calculate sheets used in <span class='trigger-word'>2 days</span>:",
+        correct_answer: "120 bedsheets",
+        distractors: ["60 bedsheets", "100 bedsheets", "80 bedsheets"],
+        intent: "Menguji konversi multi-step kodi dan waktu.",
+        rationale: "3 kodi = 60/hari. 2 hari x 60 = 120 bedsheets."
+    },
+
+    // FLUID UNITS (Items 21-30)
+    {
+        domain: "Fluid Units",
+        stem_raw: "A physician orders 0.5 Liters of Normal Saline to be infused. How many cubic centimeters (cc) or milliliters (mL) is this equal to?",
+        stem_formatted: "Order: <span class='trigger-word'>0.5 Liters</span> of Normal Saline. Convert to <span class='trigger-word'>cc / mL</span>:",
+        correct_answer: "500 cc (or 500 mL)",
+        distractors: ["50 cc (or 50 mL)", "5000 cc (or 5000 mL)", "250 cc (or 250 mL)"],
+        intent: "Menguji konversi Liter ke cc/mL.",
+        rationale: "1 L = 1000 mL/cc. 0.5 L = 500 cc."
+    },
+    {
+        domain: "Fluid Units",
+        stem_raw: "A medication vial contains 250 mg of powder. The nurse reconstitutes it with 5 cc of sterile water. What is the resulting concentration per mL?",
+        stem_formatted: "Reconstituting <span class='trigger-word'>250 mg</span> in <span class='trigger-word'>5 cc</span> yields what concentration per <span class='trigger-word'>mL</span>?",
+        correct_answer: "50 mg per mL",
+        distractors: ["25 mg per mL", "100 mg per mL", "5 mg per mL"],
+        intent: "Menguji konsentrasi per mL pasca rekonstitusi.",
+        rationale: "250 mg / 5 cc = 50 mg/mL."
+    },
+    {
+        domain: "Fluid Units",
+        stem_raw: "An IV bag contains 0.75 L of Ringer's Lactate. How many mL of fluid remains in the bag?",
+        stem_formatted: "An IV bag holds <span class='trigger-word'>0.75 L</span>. Convert volume to <span class='trigger-word'>mL</span>:",
+        correct_answer: "750 mL",
+        distractors: ["75 mL", "7500 mL", "375 mL"],
+        intent: "Menguji konversi Liter desimal ke mL.",
+        rationale: "0.75 L x 1000 = 750 mL."
+    },
+    {
+        domain: "Fluid Units",
+        stem_raw: "A total output of 2,250 cc is recorded from a chest drain over 24 hours. Express this fluid volume in Liters.",
+        stem_formatted: "Drain output recorded: <span class='trigger-word'>2,250 cc</span>. Convert output to <span class='trigger-word'>Liters</span>:",
+        correct_answer: "2.25 Liters",
+        distractors: ["22.5 Liters", "0.225 Liters", "2.5 Liters"],
+        intent: "Menguji konversi cc ke Liter desimal.",
+        rationale: "2250 / 1000 = 2.25 L."
+    },
+    {
+        domain: "Fluid Units",
+        stem_raw: "A nurse is preparing a pediatric dose of 125 mg Ampicillin. The vial concentration after dilution is 250 mg/2 mL. How many cc should be drawn up?",
+        stem_formatted: "Order: <span class='trigger-word'>125 mg Ampicillin</span>. Supply: <span class='trigger-word'>250 mg per 2 mL</span>. Calculate volume in cc:",
+        correct_answer: "1 cc",
+        distractors: ["2 cc", "0.5 cc", "1.5 cc"],
+        intent: "Menguji kalkulasi volume injeksi dasar.",
+        rationale: "(125 / 250) x 2 mL = 1 cc."
+    },
+    {
+        domain: "Fluid Units",
+        stem_raw: "An oral suspension contains 100 mg of Ibuprofen per 5 mL. The physician orders 300 mg. How many mL should be administered?",
+        stem_formatted: "Order: <span class='trigger-word'>300 mg</span>. Concentration: <span class='trigger-word'>100 mg / 5 mL</span>. Calculate total mL:",
+        correct_answer: "15 mL",
+        distractors: ["10 mL", "20 mL", "7.5 mL"],
+        intent: "Menguji perhitungan dosis sirup medis.",
+        rationale: "(300 / 100) x 5 mL = 15 mL."
+    },
+    {
+        domain: "Fluid Units",
+        stem_raw: "A patient receives 1.8 Liters of enteral feeding solution per day. Convert this daily volume to cubic centimeters (cc).",
+        stem_formatted: "Enteral solution volume: <span class='trigger-word'>1.8 Liters</span>. Convert to <span class='trigger-word'>cc</span>:",
+        correct_answer: "1,800 cc",
+        distractors: ["180 cc", "18,000 cc", "900 cc"],
+        intent: "Menguji konversi Liter desimal ke cc.",
+        rationale: "1.8 x 1000 = 1,800 cc."
+    },
+    {
+        domain: "Fluid Units",
+        stem_raw: "A vial of Ceftriaxone contains 1 gram of powder. If reconstituted with 10 mL of sterile water, what is the concentration in mg/mL?",
+        stem_formatted: "Reconstituting <span class='trigger-word'>1 gram</span> powder in <span class='trigger-word'>10 mL</span> water yields what concentration in mg/mL?",
+        correct_answer: "100 mg/mL",
+        distractors: ["10 mg/mL", "1000 mg/mL", "50 mg/mL"],
+        intent: "Menguji konversi gram ke mg dan pembagian volume.",
+        rationale: "1 g = 1000 mg. 1000 mg / 10 mL = 100 mg/mL."
+    },
+    {
+        domain: "Fluid Units",
+        stem_raw: "A wound drain collected 85 cc of serosanguinous fluid in 8 hours. What is the total volume in mL?",
+        stem_formatted: "Drain volume collected: <span class='trigger-word'>85 cc</span>. What is the equivalent volume in <span class='trigger-word'>mL</span>?",
+        correct_answer: "85 mL",
+        distractors: ["8.5 mL", "850 mL", "170 mL"],
+        intent: "Menguji fakta kesetaraan 1 cc = 1 mL.",
+        rationale: "Volume 1 cc persis sama dengan 1 mL."
+    },
+    {
+        domain: "Fluid Units",
+        stem_raw: "An IV bag contains 2.5 Liters of D5W. If 1,200 mL has infused, how many cc of fluid remain in the bag?",
+        stem_formatted: "Bag total: <span class='trigger-word'>2.5 L</span>. Infused: <span class='trigger-word'>1,200 mL</span>. Calculate remaining cc:",
+        correct_answer: "1,300 cc",
+        distractors: ["1,500 cc", "1,000 cc", "800 cc"],
+        intent: "Menguji konversi L ke cc dan pengurangan volume.",
+        rationale: "2.5 L = 2500 cc. 2500 - 1200 = 1300 cc."
+    },
+
+    // NUMERICAL TYPES (Items 31-40)
+    {
+        domain: "Numerical Types",
+        stem_raw: "The charge nurse reports: 'The 2nd post-op patient in Bed 3 is experiencing nausea.' What terms describe '2nd' and 'Bed 3' respectively?",
+        stem_formatted: "Analyze: <span class='trigger-word'>'2nd'</span> post-op patient in <span class='trigger-word'>'Bed 3'</span>. Classify numbers:",
+        correct_answer: "2nd is an Ordinal number; Bed 3 is a Nominal identifier",
+        distractors: [
+            "Both are Cardinal numbers",
+            "2nd is a Cardinal number; Bed 3 is an Ordinal number",
+            "2nd is a Nominal identifier; Bed 3 is a Fractional number"
         ],
-        intent: "Maksud Pembuat Soal: Menguji perhitungan dosis berbasis berat badan (mg/kg) yang dikombinasikan dengan konversi konsentrasi sediaan cair.",
-        rationale: "Dosis total = 20 kg x 15 mg/kg = 300 mg. Volume = (300 mg / 120 mg) x 5 mL = 2.5 x 5 mL = 12.5 mL. Opsi '12.5 mL per individual dose' menyajikan hasil akhir yang presisi."
+        intent: "Menguji klasifikasi Ordinal (urutan) vs Nominal (label).",
+        rationale: "'2nd' = urutan (Ordinal). 'Bed 3' = nama lokasi (Nominal)."
+    },
+    {
+        domain: "Numerical Types",
+        stem_raw: "A nurse documents: 'Patient in Room 402 received 3 tablets of aspirin.' Categorize the numbers '402' and '3'.",
+        stem_formatted: "Classify numbers: <span class='trigger-word'>'Room 402'</span> and <span class='trigger-word'>'3 tablets'</span>:",
+        correct_answer: "402 is Nominal; 3 is Cardinal",
+        distractors: [
+            "402 is Ordinal; 3 is Cardinal",
+            "Both are Nominal identifiers",
+            "402 is Cardinal; 3 is Ordinal"
+        ],
+        intent: "Menguji Klasifikasi Nominal vs Cardinal.",
+        rationale: "Room 402 adalah label ruangan (Nominal), 3 adalah jumlah fisik (Cardinal)."
+    },
+    {
+        domain: "Numerical Types",
+        stem_raw: "During triage, a nurse notes a patient ranked '1st' in priority for emergency care. The classification '1st' is an example of which numerical type?",
+        stem_formatted: "Patient ranked <span class='trigger-word'>'1st'</span> in priority triage. Classify numerical term:",
+        correct_answer: "Ordinal number",
+        distractors: ["Cardinal number", "Nominal identifier", "Fractional number"],
+        intent: "Menguji tipe angka Ordinal.",
+        rationale: "'1st' menunjukkan urutan prioritas (Ordinal)."
+    },
+    {
+        domain: "Numerical Types",
+        stem_raw: "A patient's Medical Record Number (MRN) is 908123. How is this numerical value categorized?",
+        stem_formatted: "Medical Record Number <span class='trigger-word'>MRN 908123</span> is classified as:",
+        correct_answer: "Nominal identifier",
+        distractors: ["Cardinal number", "Ordinal number", "Ratio measurement"],
+        intent: "Menguji identifikasi nomor RM pasien sebagai label Nominal.",
+        rationale: "MRN adalah kode identitas unik (Nominal)."
+    },
+    {
+        domain: "Numerical Types",
+        stem_raw: "A nurse records that a patient has 4 surgical drains placed. What numerical type is '4'?",
+        stem_formatted: "Statement: Patient has <span class='trigger-word'>4 surgical drains</span>. Categorize '4':",
+        correct_answer: "Cardinal number",
+        distractors: ["Ordinal number", "Nominal identifier", "Interval scale"],
+        intent: "Menguji tipe angka kuantitas (Cardinal).",
+        rationale: "Angka 4 menunjukkan jumlah pasti benda (Cardinal)."
+    },
+    {
+        domain: "Numerical Types",
+        stem_raw: "In a clinical trial report, a patient is classified as '3rd stage renal disease'. Categorize '3rd'.",
+        stem_formatted: "Classification: <span class='trigger-word'>'3rd stage'</span> renal disease. What type is '3rd'?",
+        correct_answer: "Ordinal number",
+        distractors: ["Cardinal number", "Nominal identifier", "Discrete quantity"],
+        intent: "Menguji tingkatan/stadium klinis sebagai skala Ordinal.",
+        rationale: "'3rd stage' menyatakan tingkatan keparahan (Ordinal)."
+    },
+    {
+        domain: "Numerical Types",
+        stem_raw: "A nurse assigns ICD-10 code 'E11' to document type 2 diabetes. What category does this code fall under?",
+        stem_formatted: "Diagnostic Code <span class='trigger-word'>ICD-10 'E11'</span> is classified as:",
+        correct_answer: "Nominal identifier",
+        distractors: ["Ordinal number", "Cardinal quantity", "Continuous metric"],
+        intent: "Menguji klasifikasi kode diagnostik medis.",
+        rationale: "Kode ICD-10 membedakan kategori penyakit (Nominal)."
+    },
+    {
+        domain: "Numerical Types",
+        stem_raw: "A patient completed 5 out of 10 radiation therapy sessions. Categorize '5' and '10'.",
+        stem_formatted: "Statement: Completed <span class='trigger-word'>5 out of 10</span> sessions. Both numbers are:",
+        correct_answer: "Cardinal numbers",
+        distractors: ["Ordinal numbers", "Nominal identifiers", "Fractional labels"],
+        intent: "Menguji hitungan sesi sebagai angka kuantitas.",
+        rationale: "Baik 5 dan 10 menyatakan jumlah nyata (Cardinal)."
+    },
+    {
+        domain: "Numerical Types",
+        stem_raw: "A nurse records a patient's position on the waiting list as '5th in line'. Classify '5th'.",
+        stem_formatted: "Waiting list status: <span class='trigger-word'>'5th in line'</span>. Categorize designation:",
+        correct_answer: "Ordinal number",
+        distractors: ["Cardinal number", "Nominal identifier", "Ratio metric"],
+        intent: "Menguji urutan antrean pasien.",
+        rationale: "'5th' menyatakan posisi urutan (Ordinal)."
+    },
+    {
+        domain: "Numerical Types",
+        stem_raw: "Nurse ID badge #7420 is scanned at the medication dispenser. How is '#7420' classified?",
+        stem_formatted: "Nurse Badge ID <span class='trigger-word'>#7420</span> is an example of a:",
+        correct_answer: "Nominal identifier",
+        distractors: ["Cardinal number", "Ordinal number", "Quantitative metric"],
+        intent: "Menguji identifikasi nomor badge pegawai.",
+        rationale: "Nomor ID badge adalah label identitas (Nominal)."
+    },
+
+    // CLINICAL MATH (Items 41-50)
+    {
+        domain: "Clinical Math",
+        stem_raw: "A pediatric doctor orders 'one-quarter' of a 500 mg paracetamol tablet. How many milligrams should the nurse administer?",
+        stem_formatted: "Order specifies <span class='trigger-word'>one-quarter</span> of a <span class='trigger-word'>500 mg</span> tablet. Calculate mg:",
+        correct_answer: "125 mg",
+        distractors: ["250 mg", "100 mg", "75 mg"],
+        intent: "Menguji kalkulasi 1/4 dosis tablet.",
+        rationale: "1/4 x 500 mg = 125 mg."
+    },
+    {
+        domain: "Clinical Math",
+        stem_raw: "A patient drank three-fourths (3/4) of a 240 mL juice cup. How much fluid intake in mL should the nurse record on the Intake & Output chart?",
+        stem_formatted: "Patient drank <span class='trigger-word'>three-fourths (3/4)</span> of <span class='trigger-word'>240 mL</span> cup. Record intake:",
+        correct_answer: "180 mL",
+        distractors: ["120 mL", "160 mL", "200 mL"],
+        intent: "Menguji kalkulasi pecahan 3/4 untuk asupan cairan.",
+        rationale: "3/4 x 240 mL = 180 mL."
+    },
+    {
+        domain: "Clinical Math",
+        stem_raw: "A client is instructed to take two-thirds (2/3) of a 30 mL oral solution dose. How many mL should the nurse prepare?",
+        stem_formatted: "Order specifies <span class='trigger-word'>two-thirds (2/3)</span> of <span class='trigger-word'>30 mL</span> solution. Calculate mL:",
+        correct_answer: "20 mL",
+        distractors: ["10 mL", "15 mL", "25 mL"],
+        intent: "Menguji pecahan 2/3 volume sirup.",
+        rationale: "(2/3) x 30 mL = 20 mL."
+    },
+    {
+        domain: "Clinical Math",
+        stem_raw: "A burn patient is scheduled to receive one-half (1/2) of their total 4,000 mL fluid requirement in the first 8 hours. How much fluid is infused during this initial window?",
+        stem_formatted: "Order requires <span class='trigger-word'>one-half (1/2)</span> of <span class='trigger-word'>4,000 mL</span> fluid in 8 hours. Calculate volume:",
+        correct_answer: "2,000 mL",
+        distractors: ["1,000 mL", "2,500 mL", "1,500 mL"],
+        intent: "Menguji kalkulasi resusitasi cairan luka bakar (1/2 total).",
+        rationale: "1/2 x 4000 mL = 2000 mL."
+    },
+    {
+        domain: "Clinical Math",
+        stem_raw: "A tablet contains 0.5 grams of active ingredient. If the prescription requires one-fifth (1/5) of the tablet, how many milligrams (mg) does this represent?",
+        stem_formatted: "Tablet contains <span class='trigger-word'>0.5 g (500 mg)</span>. Calculate mg for <span class='trigger-word'>one-fifth (1/5)</span> tablet:",
+        correct_answer: "100 mg",
+        distractors: ["50 mg", "200 mg", "250 mg"],
+        intent: "Menguji konversi gram ke mg dan perkalian pecahan 1/5.",
+        rationale: "0.5 g = 500 mg. 1/5 x 500 mg = 100 mg."
+    },
+    {
+        domain: "Clinical Math",
+        stem_raw: "A patient is prescribed 3/8 of an 800 mg medication daily. How many milligrams does the patient receive daily?",
+        stem_formatted: "Prescription: <span class='trigger-word'>3/8</span> of <span class='trigger-word'>800 mg</span> daily dose. Calculate mg per day:",
+        correct_answer: "300 mg",
+        distractors: ["200 mg", "400 mg", "250 mg"],
+        intent: "Menguji perhitungan pecahan 3/8 pada dosis medis.",
+        rationale: "(800 / 8) x 3 = 300 mg."
+    },
+    {
+        domain: "Clinical Math",
+        stem_raw: "An infant consumed five-eighths (5/8) of a 160 mL bottle of formula. How many mL of formula were consumed?",
+        stem_formatted: "Infant consumed <span class='trigger-word'>five-eighths (5/8)</span> of <span class='trigger-word'>160 mL</span> bottle. Calculate mL:",
+        correct_answer: "100 mL",
+        distractors: ["80 mL", "120 mL", "60 mL"],
+        intent: "Menguji asupan nutrisi pediatrik pecahan 5/8.",
+        rationale: "(160 / 8) x 5 = 100 mL."
+    },
+    {
+        domain: "Clinical Math",
+        stem_raw: "A nurse needs to administer one-third (1/3) of a 750 mg dose of antibiotic. How many mg should be administered?",
+        stem_formatted: "Calculate <span class='trigger-word'>one-third (1/3)</span> of a <span class='trigger-word'>750 mg</span> antibiotic dose:",
+        correct_answer: "250 mg",
+        distractors: ["150 mg", "300 mg", "200 mg"],
+        intent: "Menguji pembagian 1/3 dosis obat.",
+        rationale: "750 mg / 3 = 250 mg."
+    },
+    {
+        domain: "Clinical Math",
+        stem_raw: "A patient's total fluid restriction is 1,500 mL per day. The patient consumes four-fifths (4/5) of this limit by 4 PM. How many mL were consumed?",
+        stem_formatted: "Restriction: <span class='trigger-word'>1,500 mL</span>. Consumed: <span class='trigger-word'>four-fifths (4/5)</span>. Calculate mL consumed:",
+        correct_answer: "1,200 mL",
+        distractors: ["1,000 mL", "1,100 mL", "1,300 mL"],
+        intent: "Menguji kalkulasi pembatasan cairan pecahan 4/5.",
+        rationale: "(1500 / 5) x 4 = 1200 mL."
+    },
+    {
+        domain: "Clinical Math",
+        stem_raw: "A topical ointment tube contains 60 grams. The protocol requires applying one-sixth (1/6) of the tube per dressing change. How many grams are used per application?",
+        stem_formatted: "Tube size: <span class='trigger-word'>60 grams</span>. Application requirement: <span class='trigger-word'>one-sixth (1/6)</span>. Calculate grams:",
+        correct_answer: "10 grams",
+        distractors: ["6 grams", "15 grams", "12 grams"],
+        intent: "Menguji pemakaian obat salep pecahan 1/6.",
+        rationale: "60 grams / 6 = 10 grams."
     }
 ];
 
-// FISHER-YATES SHUFFLE ALGORITHM FOR PROFESSIONAL RANDOMIZATION
+// FISHER-YATES SHUFFLE ALGORITHM (RANDOMIZES OPTIONS ONLY)
 function shuffleArray(array) {
     let arr = [...array];
     for (let i = arr.length - 1; i > 0; i--) {
@@ -359,34 +750,32 @@ function shuffleArray(array) {
     return arr;
 }
 
-function generateScaledBank(count, offset = 0) {
-    let list = [];
-    for (let i = 0; i < count; i++) {
-        let base = timesNumbersBank[(i + offset) % timesNumbersBank.length];
-        
-        // Clone and shuffle options array strictly
-        let shuffledOpts = shuffleArray(base.options);
-        
-        // Find exact text of correct answer
-        let correctObj = base.options.find(o => o.correct);
-        let correctText = correctObj ? correctObj.text : "";
+// GENERATE DYNAMICALLY SHUFFLED TEST SETS (STRICTLY NO DUPLICATES)
+function buildExamSet(count) {
+    let source = shuffleArray(masterUniqueBank).slice(0, count);
+    let examBank = [];
 
-        list.push({
-            q: `[Item ${i + 1}] ${base.stem_raw}`,
-            stem_formatted: `[Item ${i + 1}] ${base.stem_formatted}`,
-            options: shuffledOpts.map(o => o.text),
-            options_raw: shuffledOpts,
-            correct: correctText,
+    source.forEach((base, index) => {
+        let rawOptions = [
+            { text: base.correct_answer, isCorrect: true },
+            ...base.distractors.map(d => ({ text: d, isCorrect: false }))
+        ];
+        
+        let shuffledOptions = shuffleArray(rawOptions);
+
+        examBank.push({
+            itemNum: index + 1,
+            domain: base.domain,
+            stem_raw: `[Item ${index + 1}] ${base.stem_raw}`,
+            stem_formatted: `[Item ${index + 1}] ${base.stem_formatted}`,
+            options: shuffledOptions,
+            correctText: base.correct_answer,
             intent: base.intent,
             rationale: base.rationale
         });
-    }
-    return list;
+    });
+    return examBank;
 }
-
-// GENERATE 50 ITEMS PRE-TEST & 150 ITEMS POST-TEST
-const preTestQuestions = generateScaledBank(50, 0);
-const postTestQuestions = generateScaledBank(150, 2);
 
 let currentUser = null;
 let currentTestType = null;
@@ -394,30 +783,7 @@ let currentQuestions = [];
 let currentQIndex = 0;
 let userAnswers = [];
 
-function escapeHtml(text) {
-    if (!text) return "";
-    return text.replace(/&/g, "&amp;")
-               .replace(/</g, "&lt;")
-               .replace(/>/g, "&gt;")
-               .replace(/"/g, "&quot;")
-               .replace(/'/g, "&#039;");
-}
-
-function initDefaultData() {
-    let db = JSON.parse(localStorage.getItem('scfhs_app_db') || '{}');
-    if (!db['081901685253']) {
-        db['081901685253'] = {
-            name: "Giyono",
-            phone: "081901685253",
-            preScore: 78,
-            postScore: null
-        };
-        localStorage.setItem('scfhs_app_db', JSON.stringify(db));
-    }
-}
-
 window.onload = function() {
-    initDefaultData();
     let saved = localStorage.getItem('scfhs_app_current_user');
     if (saved) {
         currentUser = JSON.parse(saved);
@@ -428,7 +794,7 @@ window.onload = function() {
 function handleRegister() {
     const name = document.getElementById('user-name').value.trim();
     const phone = document.getElementById('user-phone').value.trim();
-    if (!name || !phone) return alert("Fill out all required fields.");
+    if (!name || !phone) return alert("Please fill out all fields.");
 
     let db = JSON.parse(localStorage.getItem('scfhs_app_db') || '{}');
     if (!db[phone]) db[phone] = { name: name, phone: phone, preScore: null, postScore: null };
@@ -458,12 +824,7 @@ function showDashboard() {
         document.getElementById('status-pretest').innerHTML = `<span class="badge bg-green">Completed (${currentUser.preScore}%)</span>`;
         document.getElementById('btn-posttest').disabled = false;
         document.getElementById('status-posttest').innerHTML = `<span class="badge bg-blue">Ready</span>`;
-    } else {
-        document.getElementById('status-pretest').innerHTML = `<span class="badge bg-blue">Not Started</span>`;
-        document.getElementById('btn-posttest').disabled = true;
-        document.getElementById('status-posttest').innerHTML = `<span class="badge bg-blue">Locked</span>`;
     }
-
     if (currentUser.postScore !== null) {
         document.getElementById('status-posttest').innerHTML = `<span class="badge bg-green">Completed (${currentUser.postScore}%)</span>`;
     }
@@ -478,8 +839,9 @@ function logoutUser() {
 
 function startTest(type) {
     currentTestType = type;
-    // Regenerate randomized set each time test starts
-    currentQuestions = generateScaledBank(type === 'pre' ? 50 : 150, type === 'pre' ? 0 : 2);
+    // Pre-test = 25 items, Post-test = 50 items
+    let count = type === 'pre' ? 25 : 50;
+    currentQuestions = buildExamSet(count);
     currentQIndex = 0;
     userAnswers = new Array(currentQuestions.length).fill(null);
 
@@ -490,36 +852,26 @@ function startTest(type) {
 
 function renderQuestion() {
     const q = currentQuestions[currentQIndex];
-    document.getElementById('test-progress').innerText = `Question ${currentQIndex + 1} of ${currentQuestions.length}`;
-    document.getElementById('question-text').innerText = q.q;
+    document.getElementById('test-progress').innerText = `Question ${currentQIndex + 1} of ${currentQuestions.length} [Domain: ${q.domain}]`;
+    document.getElementById('question-text').innerText = q.stem_raw;
 
     const container = document.getElementById('options-container');
     container.innerHTML = '';
-
     const labels = ['A', 'B', 'C', 'D'];
 
-    q.options.forEach((optText, idx) => {
-        const checked = userAnswers[currentQIndex] === optText ? 'checked' : '';
-        const letter = labels[idx] || (idx + 1);
+    q.options.forEach((opt, idx) => {
+        const checked = userAnswers[currentQIndex] === opt.text ? 'checked' : '';
         container.innerHTML += `
             <label class="option-label">
-                <input type="radio" name="opt" value="${escapeHtml(optText)}" ${checked} onchange="userAnswers[${currentQIndex}] = unescapeHtml(this.value)">
-                <span><span class="opt-prefix">${letter}.</span>${escapeHtml(optText)}</span>
+                <input type="radio" name="opt" value="${opt.text.replace(/"/g, '&quot;')}" ${checked} onchange="userAnswers[${currentQIndex}] = this.value">
+                <span><span class="opt-prefix">${labels[idx]}.</span>${opt.text}</span>
             </label>`;
     });
     document.getElementById('btn-next').innerText = (currentQIndex === currentQuestions.length - 1) ? "Submit Examination" : "Submit Answer & Proceed";
 }
 
-function unescapeHtml(safe) {
-    return safe.replace(/&amp;/g, "&")
-               .replace(/&lt;/g, "<")
-               .replace(/&gt;/g, ">")
-               .replace(/&quot;/g, '"')
-               .replace(/&#039;/g, "'");
-}
-
 function nextQuestion() {
-    if (userAnswers[currentQIndex] === null) return alert("Select an option before continuing.");
+    if (userAnswers[currentQIndex] === null) return alert("Select an option before proceeding.");
     if (currentQIndex < currentQuestions.length - 1) {
         currentQIndex++;
         renderQuestion();
@@ -529,7 +881,7 @@ function nextQuestion() {
 function finishTest() {
     let scoreCount = 0;
     userAnswers.forEach((ans, idx) => {
-        if (ans === currentQuestions[idx].correct) {
+        if (ans === currentQuestions[idx].correctText) {
             scoreCount++;
         }
     });
@@ -547,10 +899,10 @@ function finishTest() {
     document.getElementById('view-test').classList.add('hidden');
     document.getElementById('view-result').classList.remove('hidden');
     document.getElementById('score-val').innerText = finalScore;
-    document.getElementById('score-detail').innerText = `You correctly answered ${scoreCount} out of ${currentQuestions.length} items.`;
+    document.getElementById('score-detail').innerText = `You correctly answered ${scoreCount} out of ${currentQuestions.length} items (${finalScore}%).`;
 }
 
-// PASSCODE MODAL CONTROLS
+// PASSCODE CONTROLS
 function openPassModal() {
     document.getElementById('modal-passcode').classList.remove('hidden');
     document.getElementById('input-operator-pass').focus();
@@ -567,11 +919,10 @@ function verifyPasscode() {
         closePassModal();
         openAdminConsole();
     } else {
-        alert("Protected Passcode Verification Failed.");
+        alert("Verification Failed: Invalid Passcode.");
     }
 }
 
-// KEYBOARD SHORTCUT (Ctrl + Shift + K)
 document.addEventListener('keydown', function(e) {
     if (e.ctrlKey && e.shiftKey && (e.key === 'K' || e.key === 'k')) {
         e.preventDefault();
@@ -591,8 +942,9 @@ function openAdminConsole() {
 }
 
 function inspectSet(type) {
-    let bank = generateScaledBank(type === 'pre' ? 50 : 150, type === 'pre' ? 0 : 2);
-    let title = type === 'pre' ? 'Pre-Test Repository (50 Items)' : 'Post-Test Repository (150 Items)';
+    let count = type === 'pre' ? 25 : 50;
+    let bank = buildExamSet(count);
+    let title = type === 'pre' ? 'Pre-Test Repository (25 Unique Items)' : 'Post-Test Repository (50 Unique Items)';
 
     document.getElementById('view-admin').classList.add('hidden');
     document.getElementById('view-inspector').classList.remove('hidden');
@@ -600,33 +952,32 @@ function inspectSet(type) {
 
     let container = document.getElementById('inspector-content');
     container.innerHTML = '';
-
     const labels = ['A', 'B', 'C', 'D'];
 
     bank.forEach((item) => {
-        let optionsHtml = item.options_raw.map((opt, idx) => {
-            let isCorrect = opt.correct;
+        let optionsHtml = item.options.map((opt, idx) => {
+            let isCorrect = opt.isCorrect;
             let classColor = isCorrect ? 'hl-green' : 'hl-red';
-            let letter = labels[idx] || (idx + 1);
             return `
                 <li style="margin-bottom:6px; list-style-type:none;">
-                    <strong>${letter}.</strong> <span class="${classColor}">${escapeHtml(opt.hl)}</span> — ${escapeHtml(opt.text.replace(opt.hl, ''))} 
-                    ${isCorrect ? '<strong class="hl-green">&#10004; (Jawaban Benar)</strong>' : ''}
+                    <strong>${labels[idx]}.</strong> <span class="${classColor}">${opt.text}</span>
+                    ${isCorrect ? ' <strong class="hl-green">&#10004; [CORRECT ANSWER]</strong>' : ''}
                 </li>`;
         }).join('');
 
         container.innerHTML += `
             <div class="card">
-                <h4 style="margin-bottom:10px;">${item.stem_formatted}</h4>
-                <ul style="padding-left:0; font-size:14px; margin-top:5px;">
+                <span class="badge bg-blue">${item.domain}</span>
+                <h4 style="margin-top:10px; margin-bottom:10px;">${item.stem_formatted}</h4>
+                <ul style="padding-left:0; font-size:14px;">
                     ${optionsHtml}
                 </ul>
                 <div class="analysis-box">
                     <div class="intent-box">
-                        <strong>&#127919; ${escapeHtml(item.intent)}</strong>
+                        <strong>&#127919; Assessment Intent:</strong> ${item.intent}
                     </div>
                     <div class="rationale-box">
-                        <strong>&#128073; Clinical Rationale & Analysis:</strong> ${escapeHtml(item.rationale)}
+                        <strong>&#128073; Clinical Rationale:</strong> ${item.rationale}
                     </div>
                 </div>
             </div>`;
@@ -659,32 +1010,34 @@ function syncScores() {
     list.forEach(u => {
         tbody.innerHTML += `
             <tr>
-                <td>${escapeHtml(u.phone)}</td>
-                <td>${escapeHtml(u.name)}</td>
+                <td>${u.phone}</td>
+                <td>${u.name}</td>
                 <td>${u.preScore !== null ? u.preScore + '%' : 'Pending'}</td>
                 <td>${u.postScore !== null ? u.postScore + '%' : 'Pending'}</td>
-                <td><button class="btn-danger" style="padding:4px 8px; font-size:12px;" onclick="resetUser('${escapeHtml(u.phone)}')">Reset</button></td>
+                <td><button class="btn-danger" style="padding:4px 8px; font-size:12px;" onclick="resetUser('${u.phone}')">Reset</button></td>
             </tr>`;
     });
 }
 
 function exportCSV() {
     let db = JSON.parse(localStorage.getItem('scfhs_app_db') || '{}');
-    let rows = [["Candidate ID", "Full Name", "Pre-Test Score (50)", "Post-Test Score (150)"]];
+    let rows = [["Candidate ID", "Full Name", "Pre-Test Score", "Post-Test Score"]];
     Object.values(db).forEach(u => {
         rows.push([u.phone, u.name, u.preScore !== null ? u.preScore + '%' : 'Pending', u.postScore !== null ? u.postScore + '%' : 'Pending']);
     });
-    let csvContent = "data:text/csv;charset=utf-8," + rows.map(e => e.map(item => `"${item}"`).join(",")).join("\n");
-    let encodedUri = encodeURI(csvContent);
+    let csvContent = "data:text/csv;charset=utf-8," + encodeURIComponent(
+        rows.map(e => e.map(val => `"${val}"`).join(",")).join("\n")
+    );
     let link = document.createElement("a");
-    link.setAttribute("href", encodedUri);
-    link.setAttribute("download", "SCFHS_Times_Numbers_Metrics.csv");
+    link.setAttribute("href", csvContent);
+    link.setAttribute("download", "SCFHS_Competency_Metrics.csv");
     document.body.appendChild(link);
     link.click();
     document.body.removeChild(link);
 }
 
 function resetUser(phone) {
+    if (!confirm(`Reset score record for Candidate ID: ${phone}?`)) return;
     let db = JSON.parse(localStorage.getItem('scfhs_app_db') || '{}');
     if (db[phone]) {
         db[phone].preScore = null;
@@ -700,12 +1053,12 @@ function resetUser(phone) {
 }
 
 function clearAllData() {
-    if (confirm("Are you sure you want to clear all candidate registrations and reset metrics?")) {
-        localStorage.removeItem('scfhs_app_db');
-        localStorage.removeItem('scfhs_app_current_user');
-        currentUser = null;
-        syncScores();
-    }
+    if (!confirm("CRITICAL WARNING: This will permanently delete ALL candidate records and scores. Proceed?")) return;
+    localStorage.removeItem('scfhs_app_db');
+    localStorage.removeItem('scfhs_app_current_user');
+    currentUser = null;
+    syncScores();
+    alert("Database cleared successfully.");
 }
 </script>
 </body>
